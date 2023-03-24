@@ -92,9 +92,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginEnd="10dp"
+                        android:layout_marginEnd="5dp"
                         android:layout_marginStart="5dp"
                         app:fabCustomSize="45dp"
+                        style="@style/Widget.Material3.Button.IconButton"
                         app:backgroundTint="?attr/colorSecondaryContainer" />
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -103,16 +104,23 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         app:fabCustomSize="45dp"
+                        style="@style/Widget.Material3.Button.IconButton"
                         app:backgroundTint="?attr/colorSecondaryContainer" />
 
-                    <Button
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/omnibox_overflow"
                         style="@style/Widget.Material3.Button.IconButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginEnd="5dp"
-                        app:icon="@drawable/icon_overflow" />
+                        android:layout_marginStart="5dp"
+                        app:fabCustomSize="45dp"
+                        android:src="@drawable/icon_overflow"
+                        app:backgroundTint="?attr/colorSecondaryContainer"
+
+                        />
+<!--                        app:="@drawable/icon_overflow" />-->
 
                 </LinearLayout>
 

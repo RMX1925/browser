@@ -596,7 +596,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             if (menuItem.getItemId() == R.id.page_1) {
                 tab_container.setVisibility(View.GONE);
                 listView.setVisibility(View.VISIBLE);
-                omniBox_overview_tab.setImageResource(R.drawable.icon_web);
+//                omniBox_overview_tab.setImageResource(R.drawable.icon_web);
                 overViewTab = getString(R.string.album_title_home);
                 intPage.set(R.id.page_1);
 
@@ -624,7 +624,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             else if (menuItem.getItemId() == R.id.page_2) {
                 tab_container.setVisibility(View.GONE);
                 listView.setVisibility(View.VISIBLE);
-                omniBox_overview_tab.setImageResource(R.drawable.icon_tab); //change bookmark logo here
+                omniBox_overview_tab.setImageResource(R.drawable.icon_tab_plus); //change bookmark logo here
                 overViewTab = getString(R.string.album_title_bookmarks);
                 intPage.set(R.id.page_2);
 
@@ -651,7 +651,7 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             else if (menuItem.getItemId() == R.id.page_3) {
                 tab_container.setVisibility(View.GONE);
                 listView.setVisibility(View.VISIBLE);
-                omniBox_overview_tab.setImageResource(R.drawable.icon_history);
+//                omniBox_overview_tab.setImageResource(R.drawable.icon_history);
                 overViewTab = getString(R.string.album_title_history);
                 intPage.set(R.id.page_3);
 
@@ -813,8 +813,9 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         badgeDrawable = BadgeDrawable.create(context);
         badgeDrawable.setBackgroundColor(colorSecondary);
 
-        Button omnibox_overflow = findViewById(R.id.omnibox_overflow);
+        FloatingActionButton omnibox_overflow = findViewById(R.id.omnibox_overflow);
         omnibox_overflow.setOnClickListener(v -> showOverflow());
+        omnibox_overflow.setImageResource(R.drawable.icon_overflow);
 
 //        omniBox_overview.setOnTouchListener(new SwipeTouchListener(context) {
 //            public void onSwipeTop() { performGesture("setting_gesture_tb_up"); }
@@ -860,14 +861,14 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
                 omniBox_text.setText(ninjaWebView.getTitle());
                 updateOmniBox(); }
         });
-//        omniBox_overview_tab.setOnClickListener(v -> showOverview());
+
         omniBox_overview_tab.setOnClickListener(v ->  addAlbum(getString(R.string.app_name), "", true, false, "", null));
-        omniBox_overview_tab.setOnLongClickListener(v -> {
-//            performGesture("setting_gesture_overViewButton");
-            showOverview();
-//            addAlbum(getString(R.string.app_name), "", false, false, "", null);
-            return true;
-        });
+//        omniBox_overview_tab.setOnLongClickListener(v -> {
+////            performGesture("setting_gesture_overViewButton");
+//            showOverview();
+////            addAlbum(getString(R.string.app_name), "", false, false, "", null);
+//            return true;
+//        });
     }
 
     @SuppressLint({"UnsafeOptInUsageError"})
@@ -1041,10 +1042,12 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
         GridItem item_04 = new GridItem( getString(R.string.menu_reload), R.drawable.icon_refresh);
         GridItem item_05 = new GridItem( getString(R.string.menu_closeTab), R.drawable.icon_tab_remove);
         GridItem item_06 = new GridItem( getString(R.string.menu_quit), R.drawable.icon_close);
+        GridItem item_07 = new GridItem(getString(R.string.main_menu_overview), R.drawable.icon_web);
 
         final List<GridItem> gridList_tab = new LinkedList<>();
 
         gridList_tab.add(gridList_tab.size(), item_01);
+        gridList_tab.add(gridList_tab.size(), item_07);
         gridList_tab.add(gridList_tab.size(), item_02);
         gridList_tab.add(gridList_tab.size(), item_05);
         gridList_tab.add(gridList_tab.size(), item_03);
@@ -1057,11 +1060,12 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
 
         menu_grid_tab.setOnItemLongClickListener((arg0, arg1, position, arg3) -> {
             if (position == 0) NinjaToast.show(context, item_01.getTitle());
-            else if (position == 1) NinjaToast.show(context, item_02.getTitle());
-            else if (position == 2) NinjaToast.show(context, item_03.getTitle());
-            else if (position == 3) NinjaToast.show(context, item_04.getTitle());
-            else if (position == 4) NinjaToast.show(context, item_05.getTitle());
-            else if (position == 5) NinjaToast.show(context, item_06.getTitle());
+            else if (position == 1) NinjaToast.show(context, item_07.getTitle());
+            else if (position == 2) NinjaToast.show(context, item_02.getTitle());
+            else if (position == 3) NinjaToast.show(context, item_03.getTitle());
+            else if (position == 4) NinjaToast.show(context, item_04.getTitle());
+            else if (position == 5) NinjaToast.show(context, item_05.getTitle());
+            else if (position == 6) NinjaToast.show(context, item_06.getTitle());
             return true;
         });
 
@@ -1071,7 +1075,10 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             if (position == 0) {
                 ninjaWebView.loadUrl(favURL);
                 dialog_overflow.cancel();
-            }  else if (position == 1) {
+            } else if(position == 1) {
+                showOverview();
+                dialog_overflow.cancel();
+            } else if (position == 2) {
                 addAlbum(getString(R.string.app_name), favURL, true, false, "", dialog_overflow);
                 dialog_overflow.cancel();
             } else if (position == 3) {
@@ -1079,10 +1086,10 @@ public class BrowserActivity extends AppCompatActivity implements BrowserControl
             } else if (position == 4) {
                 ninjaWebView.reload();
                 dialog_overflow.cancel();
-            } else if (position == 2) {
+            } else if (position == 5) {
                 removeAlbum(currentAlbumController);
                 dialog_overflow.cancel();
-            } else if (position == 5) {
+            } else if (position == 6) {
                 doubleTapsQuit();
                 dialog_overflow.cancel();
             } });

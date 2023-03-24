@@ -4,6 +4,7 @@ import static androidx.constraintlayout.motion.utils.Oscillator.TAG;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -53,6 +54,11 @@ public class GridAdapter extends BaseAdapter {
                 holder.iconMenu.setImageResource(item.getData());
             } catch (Exception e) {
                 Log.i(TAG, "Exception:" + e);
+            }
+
+            if(text.equals("Quit")){
+                holder.title.setTextColor(Color.parseColor(context.getString(R.string.color_red)));
+                holder.iconMenu.setColorFilter(Color.parseColor(context.getString(R.string.color_red)));
             }
 
             if (text.equals(sp.getString("icon_01", context.getResources().getString(R.string.color_red)))) holder.cardView.setCardBackgroundColor(ResourcesCompat.getColor(context.getResources(), R.color.red, null));

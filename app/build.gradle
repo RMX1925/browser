@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('/Users/krishnasuryavanshi/Documents/Project/KeyStore/Untitled')
+            storePassword 'krishna'
+            keyAlias 'key0'
+            keyPassword 'krishna'
+        }
+    }
     compileSdkVersion 33
 
     compileOptions {
@@ -16,6 +24,7 @@ android {
         versionName "9.11"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
+        signingConfig signingConfigs.release
     }
 
     buildTypes {
